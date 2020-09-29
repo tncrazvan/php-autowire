@@ -12,5 +12,10 @@
     "require": {},
 	"config": {
 		"preferred-install": "dist"
+    },
+    "autoload": {
+		"psr-4": {
+			"":["src"]
+		}
 	}
 }
