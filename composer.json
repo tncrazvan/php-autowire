@@ -9,5 +9,8 @@
             "email": "tangent.jotey@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+	"config": {
+		"preferred-install": "dist"
+	}
 }
