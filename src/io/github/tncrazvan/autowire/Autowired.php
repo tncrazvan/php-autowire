@@ -1,15 +1,13 @@
 <?php
 namespace io\github\tncrazvan\autowire;
 
-use ReflectionProperty;
-
 trait Autowired{
     public static $injecting = false;
     protected array $autoinjected = [];
     protected function auto_inject():array{
         self::$injecting = true;
         $reflection = new \ReflectionClass(\get_called_class());
-        $props = $reflection->getProperties(ReflectionProperty::IS_PUBLIC);
+        $props = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
         foreach($props as &$prop){
             if($prop->isInitialized($this))
                 continue;
