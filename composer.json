@@ -1,0 +1,13 @@
+{
+    "name": "tncrazvan/autowire",
+    "description": "Dependency injections of singletons for php classes",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Razvan Tanase",
+            "email": "tangent.jotey@gmail.com"
+        }
+    ],
+    "require": {}
+}
