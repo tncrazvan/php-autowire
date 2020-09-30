@@ -2,7 +2,7 @@
 namespace io\github\tncrazvan\autowire;
 
 trait Autowired{
-    public static $injecting = false;
+    public static bool $injecting = false;
     protected array $autoinjected = [];
     protected function auto_inject():array{
         self::$injecting = true;
@@ -21,7 +21,7 @@ trait Autowired{
                 $this->$name = $inject->invoke(null);
                 $this->autoinjected[] = $this->$name;
             }catch(\ReflectionException $e){
-                //echo "$name is not injectable because it does not specify a static 'inject' method.\n";
+                //echo "$name is not injectable because it does not specify a static 'singleton' method.\n";
             }
         }
         return $this->autoinjected;
