@@ -2,13 +2,14 @@
 namespace io\github\tncrazvan\autowire;
 
 trait Autowired{
-    public static bool $injecting = false;
+    public static $injecting = false;
     protected array $autoinjected = [];
     protected function auto_inject():array{
         self::$injecting = true;
         $reflection = new \ReflectionClass(\get_called_class());
-        $props = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
+        $props = $reflection->getProperties();
         foreach($props as &$prop){
+            $prop->setAccessible(true);
             if($prop->isInitialized($this))
                 continue;
             $classname = $prop->getType()->getName();
@@ -16,13 +17,16 @@ trait Autowired{
                 continue;
             $object = new \ReflectionClass($classname);
             try{
+                
                 $inject = $object->getMethod("singleton");
                 $name = $prop->getName();
-                $this->$name = $inject->invoke(null);
+                $prop->setValue($this,$inject->invoke(null));
+                //$this->$name = $inject->invoke(null);
                 $this->autoinjected[] = $this->$name;
             }catch(\ReflectionException $e){
-                //echo "$name is not injectable because it does not specify a static 'singleton' method.\n";
+                //echo "$name is not injectable because it does not specify a static 'inject' method.\n";
             }
+            $prop->setAccessible(false);
         }
         return $this->autoinjected;
     }
